@@ -1,20 +1,18 @@
 import pygame
+import random
 
 Color = (255, 255, 255)
 width = 740
 height = 345
 background_width = width
 
-def back(background, x, y):
+def drawObject(obj, x, y):
     global gamepad
-    gamepad.blit(background, (x,y))
-
-def airplane(x, y):
-    global gamepad, aircraft
-    gamepad.blit(aircraft, (x, y))
-
+    gamepad.blit(obj, (x, y))
+    
 def runGame():
-    global gamepad, clock, background1, background2
+    global gamepad, aircraft, clock, background1, background2
+    global bat, fires
 
     x = width * 0.05
     y = height * 0.8
@@ -23,6 +21,14 @@ def runGame():
     background1_x = 0
     background2_x = background_width
     speed = 2
+    
+    bat_x = width
+    bat_y = random.randrange(0, height)
+    
+    fire_x = width
+    fire_y = random.randrange(0, height)
+    random.shuffle(fires)
+    fire = fires[0]
     
     crashed = False
     while not crashed:
@@ -46,6 +52,22 @@ def runGame():
         background1_x -= speed
         background2_x -= speed
         
+        bat_x -= 7
+        if bat_x <= 0:
+            bat_x = width
+            bat_y = random.randrange(0, height)
+        
+        if fire == None:
+            fire_x -= 30
+        else:
+            fire_x -= 15
+            
+        if fire_x <= 0:
+            fire_x = width
+            fire_y = random.randrange(0, height)
+            random.shuffle(fires)
+            fire = fires[0]
+            
         if background1_x <= -background_width:
             background1_x = background_width
         
@@ -54,10 +76,14 @@ def runGame():
            background2_x = background_width
         
         
-        back(background1, background1_x, 0)
-        back(background2, background2_x, 0)
+        drawObject(background1, background1_x, 0)
+        drawObject(background2, background2_x, 0)
+        drawObject(bat, bat_x, bat_y)
         
-        airplane(x, y)
+        if fire != None:
+            drawObject(fire, fire_x, fire_y)
+        drawObject(aircraft, x, y)
+        
         pygame.display.update()
         clock.tick(60)
 
@@ -66,16 +92,27 @@ def runGame():
 
 def initGame():
     global gamepad, aircraft, clock, background1, background2
-
+    global bat, fires
+    
+    fires = []
+    
     pygame.init()
     gamepad = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Test")
     aircraft = pygame.image.load('plane.png')
     background1 = pygame.image.load('background.png')
     background2 = background1.copy()
+ 
+    bat = pygame.image.load('bat.png')
+    fires.append(pygame.image.load('fireball.png'))
+    fires.append(pygame.image.load('fireball2.png'))  
     
+    for i in range(5):
+        fires.append(None)
+         
     clock = pygame.time.Clock()
     runGame()
 
 if __name__ == "__main__":
     initGame()
+
