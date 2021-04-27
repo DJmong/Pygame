@@ -118,6 +118,9 @@ def initGame():
     runGame()
 
 if __name__ == "__main__":
-    a = ch.Enemy(10,1,1)
+    a = ch.Enemy(10,1,1, pygame.image.load('fireball.png'))
     b = ch.Unit(10,1,1)
+    a = pygame.image.load('fireball.png')
+    print(type(a))
+    
     # initGame()
