@@ -6,6 +6,16 @@ width = 740
 height = 345
 background_width = width
 
+class unit():
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+class enemy(unit):
+    def __init__(self, x, y, hp):
+        super().__init__(x,y)
+        self.hp = hp
+    
 def drawObject(obj, x, y):
     global gamepad
     gamepad.blit(obj, (x, y))
@@ -14,6 +24,7 @@ def runGame():
     global gamepad, aircraft, clock, background1, background2
     global bat, fires
 
+    obj
     x = width * 0.05
     y = height * 0.8
     y_change = 0
@@ -114,5 +125,6 @@ def initGame():
     runGame()
 
 if __name__ == "__main__":
-    initGame()
-
+    a = enemy(1,1,10)
+    b = unit(1,1)
+    # initGame()
