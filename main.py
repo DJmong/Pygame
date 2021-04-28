@@ -14,10 +14,9 @@ def drawObject(obj, x, y):
     gamepad.blit(obj, (x, y))
     
 def runGame():
-    global gamepad, aircraft, clock, background1, background2
+    global gamepad, user, clock, background1, background2
     global bat, fires
 
-    obj
     x = width * 0.05
     y = height * 0.8
     y_change = 0
@@ -82,11 +81,11 @@ def runGame():
         
         drawObject(background1, background1_x, 0)
         drawObject(background2, background2_x, 0)
-        drawObject(bat, bat_x, bat_y)
+        drawObject(bat.getImage(), bat_x, bat_y)
         
         if fire != None:
             drawObject(fire, fire_x, fire_y)
-        drawObject(aircraft, x, y)
+        drawObject(user.getImage(), x, y)
         
         pygame.display.update()
         clock.tick(60)
@@ -95,19 +94,20 @@ def runGame():
     quit()
 
 def initGame():
-    global gamepad, aircraft, clock, background1, background2
+    global gamepad, user, clock, background1, background2
     global bat, fires
     
     fires = []
     
     pygame.init()
     gamepad = pygame.display.set_mode((width, height))
+    
+    user = ch.Player(100, pygame.image.load('plane.png'))
     pygame.display.set_caption("Test")
-    aircraft = pygame.image.load('plane.png')
     background1 = pygame.image.load('background.png')
     background2 = background1.copy()
  
-    bat = pygame.image.load('bat.png')
+    bat = ch.Enemy(100, pygame.image.load('bat.png'))
     fires.append(pygame.image.load('fireball.png'))
     fires.append(pygame.image.load('fireball2.png'))  
     
@@ -118,9 +118,4 @@ def initGame():
     runGame()
 
 if __name__ == "__main__":
-    a = ch.Enemy(10,1,1, pygame.image.load('fireball.png'))
-    b = ch.Unit(10,1,1)
-    a = pygame.image.load('fireball.png')
-    print(type(a))
-    
-    # initGame()
+    initGame()
