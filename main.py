@@ -1,6 +1,7 @@
 import pygame
 import random
 import character as ch
+import bgm
 
 Color = (255, 255, 255)
 width = 740
@@ -98,7 +99,7 @@ def initGame():
     global bat, fires
     
     fires = []
-    
+    bgm.playmusic('music.mp3')
     pygame.init()
     gamepad = pygame.display.set_mode((width, height))
     
