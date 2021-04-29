@@ -9,6 +9,11 @@ def playmusic(soundfile):
 def stopmusic():
     pygame.mixer.music.stop()
 
+def test():
+    while(1):
+        pass
 
 if __name__ == '__main__':
     pygame.init()
+    playmusic('music.mp3')
+    test()
