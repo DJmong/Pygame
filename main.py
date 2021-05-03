@@ -5,6 +5,7 @@ import bgm
 from time import sleep
 
 Color = (255, 255, 255)
+RED = (255, 0, 0)
 width = 740
 height = 345
 background_width = width
@@ -12,8 +13,32 @@ background_width = width
 bat_width = 110
 bat_height = 67
 
+fireball1_width = 140
+fireball1_height = 60
+fireball2_width = 86
+fireball2_height = 60
+
 aircraft_width = 90
 aircraft_height = 55
+    
+def textObj(text, font):
+    textSurface = font.render(text, True, RED)
+    return textSurface, textSurface.get_rect()
+
+def dispMessage(text):
+    global gamepad
+    
+    largeText = pygame.font.Font('freesansbold.ttf', 115)
+    TextSurf, TextRect = textObj(text, largeText)
+    TextRect.center = ((width / 2), (height / 2))
+    gamepad.blit(TextSurf, TextRect)
+    pygame.display.update()
+    sleep(2)
+    runGame()
+    
+def crash():
+    global gamepad
+    dispMessage('Crashed!')
     
 def drawObject(obj, x, y):
     global gamepad
@@ -43,6 +68,8 @@ def runGame():
     fire_y = random.randrange(0, height)
     random.shuffle(fires)
     fire = fires[0]
+    
+    bgm.playBgm('music.mp3')
     
     crashed = False
     while not crashed:
@@ -79,9 +106,6 @@ def runGame():
         drawObject(background1, background1_x, 0)
         drawObject(background2, background2_x, 0)
 
-       
-
-   
         y += y_change
 
         if y < 0:
@@ -104,8 +128,6 @@ def runGame():
             random.shuffle(fires)
             fire = fires[0]
 
-        if fire != None:
-            drawObject(fire, fire_x, fire_y)
    
         bat_x -= 7
         if bat_x <= 0:
@@ -129,7 +151,25 @@ def runGame():
                         bulletxy.remove(bxy)
                     except:
                         pass
-                    
+        
+        if x + aircraft_width > bat_x:
+            if (y > bat_y and y < bat_y + bat_height) or\
+            (y + aircraft_height > bat_y and y + aircraft_height < bat_y + bat_height):
+                crash()
+        
+        if fire[1] != None:
+            if fire[0] == 0:
+                fireball_width = fireball1_width
+                fireball_height = fireball1_height
+            elif fire[0] == 1:
+                fireball_width = fireball2_width
+                fireball_height = fireball2_height
+            
+            if x + aircraft_width > fire_x:
+                if (y > fire_y and y < fire_y + fireball_height) or\
+                (y + aircraft_height > fire_y and y + aircraft_height < fire_y + fireball_height):
+                    crash()
+            
         if not isShotBat:
             drawObject(bat.getImage(), bat_x, bat_y)
         else:
@@ -145,6 +185,8 @@ def runGame():
             for bx, by in bullet_xy:
                 drawObject(bullet, bx, by)
         
+        if fire[1] != None:
+            drawObject(fire[1], fire_x, fire_y)
 
         
         pygame.display.update()
@@ -167,13 +209,13 @@ def initGame():
     background2 = background1.copy()
  
     bat = ch.Enemy(100, pygame.image.load('bat.png'))
-    fires.append(pygame.image.load('fireball.png'))
-    fires.append(pygame.image.load('fireball2.png'))  
+    fires.append((0, pygame.image.load('fireball.png')))
+    fires.append((0, pygame.image.load('fireball2.png')))  
     boom = pygame.image.load('boom.png')
     bullet = pygame.image.load('bullet.png')
 
-    for i in range(5):
-        fires.append(None)
+    for i in range(3):
+        fires.append((i+2, None))
          
     clock = pygame.time.Clock()
     runGame()
