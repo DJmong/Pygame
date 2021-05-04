@@ -52,7 +52,8 @@ def runGame():
     
     isShotBat = False
     boom_count = 0
-    
+
+
     x = width * 0.05
     y = height * 0.8
     y_change = 0
@@ -128,14 +129,10 @@ def runGame():
             random.shuffle(fires)
             fire = fires[0]
 
-   
         bat_x -= 7
         if bat_x <= 0:
             bat_x = width
             bat_y = random.randrange(0, height)
- 
-
-            
 
         if len(bullet_xy) != 0:
             for i, bxy in enumerate(bullet_xy):
