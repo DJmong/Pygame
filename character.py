@@ -45,11 +45,20 @@ class Enemy(Unit):
 class Bullet(Unit):
     def __init__(self, image, owner):
         super().__init__(image)
+        self.setOwn(owner)
+        
+    def setOwn(self, owner):
         self.owner = owner
+        
+    def isOwner(self, obj):
+        if self.owner == obj:
+            return True
+        else:
+            return False
 
 if __name__ == "__main__":
     a = Enemy(10, pygame.image.load('fireball.png'))
-    b = Player(pygame.image.load('plane.png'))
+    b = Bullet(pygame.image.load('plane.png'), a)
     a.setLocation(1,1)
     a.setSize(1,2)
     print(a.getSize())
