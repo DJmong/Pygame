@@ -28,11 +28,11 @@ class Key():
     pass
 
 class Unit(Point):
-    def __init__(self, hp, Surface):
-        self.image = Surface
+    def __init__(self, image):
+        self.image = image
         
-    def setImage(self, Surface):
-        self.image = Surface
+    def setImage(self, image):
+        self.image = image
         
     def getImage(self):
         return self.image
