@@ -200,7 +200,7 @@ def initGame():
     pygame.init()
     gamepad = pygame.display.set_mode((width, height))
     
-    user = ch.Player(100, pygame.image.load('plane.png'))
+    user = ch.Player(pygame.image.load('plane.png'))
     pygame.display.set_caption("Test")
     background1 = pygame.image.load('background.png')
     background2 = background1.copy()

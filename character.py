@@ -22,13 +22,11 @@ class Point():
         self.ac = [ac_x, ac_y]
         
     def getAccel(self):
-        return self.ac_x, self.ac_y    
-    
-class Key():
-    pass
+        return self.ac
 
 class Unit(Point):
     def __init__(self, image):
+        super().__init__()
         self.image = image
         
     def setImage(self, image):
@@ -41,11 +39,17 @@ class Player(Unit):
     pass
 
 class Enemy(Unit):
-    pass
+    def __init__(self, hp, image):
+        super().__init__(image)
+
+class Bullet(Unit):
+    def __init__(self, image, owner):
+        super().__init__(image)
+        self.owner = owner
 
 if __name__ == "__main__":
     a = Enemy(10, pygame.image.load('fireball.png'))
-    b = Player(10, pygame.image.load('plane.png'))
+    b = Player(pygame.image.load('plane.png'))
     a.setLocation(1,1)
     a.setSize(1,2)
     print(a.getSize())
