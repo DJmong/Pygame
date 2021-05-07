@@ -70,6 +70,7 @@ def runGame():
     random.shuffle(fires)
     fire = fires[0]
     
+    bgm.setBgmVolume(0.4)
     bgm.playBgm('sound/music.mp3')
     
     crashed = False
@@ -171,6 +172,7 @@ def runGame():
             drawObject(bat.getImage(), bat_x, bat_y)
         else:
             drawObject(boom, bat_x, bat_y)
+            bgm.playSfx('sound/sfx.mp3')
             boom_count += 1
             if boom_count > 5:
                 boom_count = 0
