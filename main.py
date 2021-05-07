@@ -1,7 +1,7 @@
 import pygame
 import random
-import character as ch
-import bgm
+from source import bgm
+from source import character as ch
 from time import sleep
 
 Color = (255, 255, 255)
@@ -70,7 +70,7 @@ def runGame():
     random.shuffle(fires)
     fire = fires[0]
     
-    bgm.playBgm('music.mp3')
+    bgm.playBgm('sound/music.mp3')
     
     crashed = False
     while not crashed:
@@ -200,16 +200,16 @@ def initGame():
     pygame.init()
     gamepad = pygame.display.set_mode((width, height))
     
-    user = ch.Player(pygame.image.load('plane.png'))
+    user = ch.Player(pygame.image.load('graphic/plane.png'))
     pygame.display.set_caption("Test")
-    background1 = pygame.image.load('background.png')
+    background1 = pygame.image.load('graphic/background.png')
     background2 = background1.copy()
  
-    bat = ch.Enemy(100, pygame.image.load('bat.png'))
-    fires.append((0, pygame.image.load('fireball.png')))
-    fires.append((0, pygame.image.load('fireball2.png')))  
-    boom = pygame.image.load('boom.png')
-    bullet = pygame.image.load('bullet.png')
+    bat = ch.Enemy(100, pygame.image.load('graphic/bat.png'))
+    fires.append((0, pygame.image.load('graphic/fireball.png')))
+    fires.append((0, pygame.image.load('graphic/fireball2.png')))  
+    boom = pygame.image.load('graphic/boom.png')
+    bullet = pygame.image.load('graphic/bullet.png')
 
     for i in range(3):
         fires.append((i+2, None))
