@@ -1,5 +1,6 @@
 import character
 
+
 def chk_crash():
     pass
 

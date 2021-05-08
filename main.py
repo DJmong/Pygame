@@ -79,17 +79,30 @@ def runGame():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 crashed = True
-            
             if event.type == pygame.KEYDOWN:
+                accel_x, accel_y = user.getAccel()
                 if event.key == pygame.K_UP:
-                    user.setAccel(0, -10)
-                elif event.key == pygame.K_DOWN:
-                    user.setAccel(0, 10)
-                elif event.key == pygame.K_LEFT:
-                    user.setAccel(-10, 0)
-                elif event.key == pygame.K_RIGHT:
-                    user.setAccel(10, 0)
-                elif event.key == pygame.K_LCTRL:
+                    accel_y += -6
+                if event.key == pygame.K_DOWN:
+                    accel_y += 6
+                if event.key == pygame.K_LEFT:
+                    accel_x += -6
+                if event.key == pygame.K_RIGHT:
+                    accel_x += 6
+
+                if accel_x > 25:
+                    accel_x = 25
+                elif accel_x < -25:
+                    accel_x = -25
+
+                if accel_y > 25:
+                    accel_y = 25
+                elif accel_y < -25:
+                    accel_y = -25
+
+                user.setAccel(accel_x, accel_y)
+                
+                if event.key == pygame.K_LCTRL:
                     x, y = user.getLocation()
                     bullet_x = x + aircraft_width
                     bullet_y = y + aircraft_height/2
@@ -97,7 +110,12 @@ def runGame():
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                    user.setAccel(0, 0)
+                    accel_x, accel_y = user.getAccel()
+                    user.setAccel(accel_x, 0)
+                if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
+                    accel_x, accel_y = user.getAccel()
+                    user.setAccel(0, accel_y)
+                    
         x, y = user.getLocation()        
 
         gamepad.fill(Color)
@@ -159,7 +177,6 @@ def runGame():
                     except:
                         pass
         
-
         #crash check for 
         if x + aircraft_width > bat_x:
             if (y > bat_y and y < bat_y + bat_height) or\
