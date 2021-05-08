@@ -1,7 +1,9 @@
 import pygame
 
+folder = 'sound'
 
-def playBgm(file):
+def playBgm(name):
+    file = folder + '/' + name
     pygame.mixer.music.load(file)
     pygame.mixer.music.play(-1)
 
@@ -11,8 +13,9 @@ def setBgmVolume(volume):
 def stopBgm():
     pygame.mixer.music.stop()
 
-def playSfx(file):
-    Sound = pygame.mixer.Sound('sound/sfx.mp3')
+def playSfx(name):
+    file = folder + '/' + name
+    Sound = pygame.mixer.Sound(file)
     pygame.mixer.Sound.play(Sound)
 
 def test():
@@ -22,6 +25,6 @@ def test():
 if __name__ == '__main__':
     pygame.init()
     setBgmVolume(0.3)
-    playBgm('sound/music.mp3')
-    playSfx('sound/sfx.mp3')
+    playBgm('music.mp3')
+    playSfx('sfx.mp3')
     test()

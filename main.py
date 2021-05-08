@@ -62,8 +62,7 @@ def runGame():
     background2_x = background_width
     speed = 2
     
-    bat_x = width
-    bat_y = random.randrange(0, height)
+    bat.setLocation(width, random.randrange(0, height))
     
     fire_x = width
     fire_y = random.randrange(0, height)
@@ -71,7 +70,7 @@ def runGame():
     fire = fires[0]
     
     bgm.setBgmVolume(0.4)
-    bgm.playBgm('sound/music.mp3')
+    bgm.playBgm('music.mp3')
     
     crashed = False
     while not crashed:
@@ -130,11 +129,14 @@ def runGame():
             random.shuffle(fires)
             fire = fires[0]
 
-        bat_x -= 7
+        bat.setAccel(-7, 0)
+        bat_x, bat_y = bat.getLocation()
+        bat.move()
         if bat_x <= 0:
-            bat_x = width
-            bat_y = random.randrange(0, height)
+            bat.setLocation(width, random.randrange(0, height - bat_height))
 
+        bat_x, bat_y = bat.getLocation()
+        #bullet check for bat
         if len(bullet_xy) != 0:
             for i, bxy in enumerate(bullet_xy):
                 bxy[0] += 15
@@ -150,11 +152,13 @@ def runGame():
                     except:
                         pass
         
+        #crash check for 
         if x + aircraft_width > bat_x:
             if (y > bat_y and y < bat_y + bat_height) or\
             (y + aircraft_height > bat_y and y + aircraft_height < bat_y + bat_height):
                 crash()
         
+        #fire crash check
         if fire[1] != None:
             if fire[0] == 0:
                 fireball_width = fireball1_width
@@ -167,17 +171,18 @@ def runGame():
                 if (y > fire_y and y < fire_y + fireball_height) or\
                 (y + aircraft_height > fire_y and y + aircraft_height < fire_y + fireball_height):
                     crash()
-            
+        
+        bat_x, bat_y = bat.getLocation()
+
         if not isShotBat:
             drawObject(bat.getImage(), bat_x, bat_y)
         else:
             drawObject(boom, bat_x, bat_y)
-            bgm.playSfx('sound/sfx.mp3')
+            bgm.playSfx('sfx.mp3')
             boom_count += 1
             if boom_count > 5:
                 boom_count = 0
-                bat_x = width
-                bat_y = random.randrange(0, height - bat_height)
+                bat.setLocation(width, random.randrange(0, height - bat_height))
                 isShotBat = False
                             
         if len(bullet_xy) != 0:
