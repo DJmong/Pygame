@@ -6,20 +6,24 @@ from time import sleep
 
 Color = (255, 255, 255)
 RED = (255, 0, 0)
-width = 740
-height = 345
+width = 1280
+height = 480
 background_width = width
 
-bat_width = 110
-bat_height = 67
+img_user = 'graphic/backup.png'
+img_enemy = 'graphic/bat.png'
+img_bg = 'graphic/background.png'
+
+bat_width = 100
+bat_height = 60
 
 fireball1_width = 140
 fireball1_height = 60
 fireball2_width = 86
 fireball2_height = 60
 
-aircraft_width = 90
-aircraft_height = 55
+aircraft_width = 140
+aircraft_height = 70
     
 def textObj(text, font):
     textSurface = font.render(text, True, RED)
@@ -53,10 +57,7 @@ def runGame():
     isShotBat = False
     boom_count = 0
 
-
-    x = width * 0.05
-    y = height * 0.8
-    y_change = 0
+    user.setLocation(width * 0.05, height * 0.8)
 
     background1_x = 0
     background2_x = background_width
@@ -72,6 +73,7 @@ def runGame():
     bgm.setBgmVolume(0.4)
     bgm.playBgm('music.mp3')
     
+    #bgm.playSfx('stop.mp3')
     crashed = False
     while not crashed:
         for event in pygame.event.get():
@@ -80,18 +82,23 @@ def runGame():
             
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    y_change = -5
+                    user.setAccel(0, -10)
                 elif event.key == pygame.K_DOWN:
-                    y_change = 5
+                    user.setAccel(0, 10)
+                elif event.key == pygame.K_LEFT:
+                    user.setAccel(-10, 0)
+                elif event.key == pygame.K_RIGHT:
+                    user.setAccel(10, 0)
                 elif event.key == pygame.K_LCTRL:
+                    x, y = user.getLocation()
                     bullet_x = x + aircraft_width
                     bullet_y = y + aircraft_height/2
                     bullet_xy.append([bullet_x, bullet_y])
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                    y_change = 0
-        
+                    user.setAccel(0, 0)
+        x, y = user.getLocation()        
 
         gamepad.fill(Color)
         
@@ -107,7 +114,7 @@ def runGame():
         drawObject(background1, background1_x, 0)
         drawObject(background2, background2_x, 0)
 
-        y += y_change
+        user.move()
 
         if y < 0:
             y = 0
@@ -152,6 +159,7 @@ def runGame():
                     except:
                         pass
         
+
         #crash check for 
         if x + aircraft_width > bat_x:
             if (y > bat_y and y < bat_y + bat_height) or\
@@ -180,10 +188,9 @@ def runGame():
             drawObject(boom, bat_x, bat_y)
             bgm.playSfx('sfx.mp3')
             boom_count += 1
-            if boom_count > 5:
-                boom_count = 0
-                bat.setLocation(width, random.randrange(0, height - bat_height))
-                isShotBat = False
+            bat.setLocation(width, random.randrange(0, height - bat_height))
+            isShotBat = False
+            # bgm.playSfx('stop.mp3')
                             
         if len(bullet_xy) != 0:
             for bx, by in bullet_xy:
@@ -207,12 +214,13 @@ def initGame():
     pygame.init()
     gamepad = pygame.display.set_mode((width, height))
     
-    user = ch.Player(pygame.image.load('graphic/plane.png'))
+    user = ch.Player(pygame.image.load(img_user))
     pygame.display.set_caption("Test")
-    background1 = pygame.image.load('graphic/background.png')
+    background1 = pygame.image.load(img_bg)
+    background1 = pygame.transform.scale(background1, (width, height))
     background2 = background1.copy()
  
-    bat = ch.Enemy(100, pygame.image.load('graphic/bat.png'))
+    bat = ch.Enemy(100, pygame.image.load(img_enemy))
     fires.append((0, pygame.image.load('graphic/fireball.png')))
     fires.append((0, pygame.image.load('graphic/fireball2.png')))  
     boom = pygame.image.load('graphic/boom.png')
