@@ -3,14 +3,7 @@ import pygame
 class Point():
     def __init__(self):
         self.xy = [0, 0]
-        self.wh = [0, 0]
         self.ac = [0, 0]
-
-    def setSize(self, width, height):
-        self.wh = [width, height]
-        
-    def getSize(self):
-        return self.wh
     
     def setLocation(self, x, y):
         self.xy = [x, y]
@@ -33,22 +26,37 @@ class Point():
 class Unit(Point):
     def __init__(self, image):
         super().__init__()
-        self.image = image
+        self.image = pygame.image.load(image)
+        self.wh = [0, 0]
     
     def setImage(self, image):
         self.image = image
         
     def getImage(self):
-        return self.image    
+        return self.image  
+    
+    def setSize(self, width, height):
+        self.wh = [width, height]
+        self.image = pygame.transform.scale(self.image, (width, height))
         
-
+    def getSize(self):
+        return self.wh
 
 class Player(Unit):
-    pass
+    def key_ins(self, key):
+        pass
 
 class Enemy(Unit):
     def __init__(self, hp, image):
         super().__init__(image)
+        self.hp = hp
+        
+    def __add__(self, hp):
+        self.hp += hp
+    
+    def __sub__(self, hp):
+        self.hp -= hp
+        
 
 class Bullet(Unit):
     def __init__(self, image, owner):

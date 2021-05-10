@@ -2,6 +2,7 @@ import pygame
 import random
 from source import bgm
 from source import character as ch
+from source import engine as eg
 from time import sleep
 
 Color = (255, 255, 255)
@@ -22,8 +23,8 @@ fireball1_height = 60
 fireball2_width = 86
 fireball2_height = 60
 
-aircraft_width = 140
-aircraft_height = 70
+aircraft_width = 80
+aircraft_height = 40
     
 def textObj(text, font):
     textSurface = font.render(text, True, RED)
@@ -51,6 +52,9 @@ def drawObject(obj, x, y):
 def runGame():
     global gamepad, user, clock, background1, background2
     global bat, fires, boom
+
+    eg.add_unit(bat)
+    eg.add_unit(user)
 
     bullet_xy = []
     
@@ -132,7 +136,6 @@ def runGame():
         drawObject(background1, background1_x, 0)
         drawObject(background2, background2_x, 0)
 
-        user.move()
 
         if y < 0:
             y = 0
@@ -156,7 +159,6 @@ def runGame():
 
         bat.setAccel(-7, 0)
         bat_x, bat_y = bat.getLocation()
-        bat.move()
         if bat_x <= 0:
             bat.setLocation(width, random.randrange(0, height - bat_height))
 
@@ -204,7 +206,6 @@ def runGame():
         else:
             drawObject(boom, bat_x, bat_y)
             bgm.playSfx('sfx.mp3')
-            boom_count += 1
             bat.setLocation(width, random.randrange(0, height - bat_height))
             isShotBat = False
             # bgm.playSfx('stop.mp3')
@@ -216,6 +217,7 @@ def runGame():
         if fire[1] != None:
             drawObject(fire[1], fire_x, fire_y)
 
+        eg.move_unit()
         
         pygame.display.update()
         clock.tick(60)
@@ -231,13 +233,17 @@ def initGame():
     pygame.init()
     gamepad = pygame.display.set_mode((width, height))
     
-    user = ch.Player(pygame.image.load(img_user))
+    user = ch.Player(img_user)
+    user.setSize(aircraft_width, aircraft_height)
+    
     pygame.display.set_caption("Test")
     background1 = pygame.image.load(img_bg)
     background1 = pygame.transform.scale(background1, (width, height))
     background2 = background1.copy()
  
-    bat = ch.Enemy(100, pygame.image.load(img_enemy))
+    bat = ch.Enemy(100, img_enemy)
+    bat.setSize(bat_width, bat_height)
+    
     fires.append((0, pygame.image.load('graphic/fireball.png')))
     fires.append((0, pygame.image.load('graphic/fireball2.png')))  
     boom = pygame.image.load('graphic/boom.png')
