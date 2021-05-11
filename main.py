@@ -11,8 +11,8 @@ width = 1280
 height = 480
 background_width = width
 
-img_user = 'graphic/backup.png'
-img_enemy = 'graphic/bat.png'
+img_user = 'backup.png'
+img_enemy = 'bat.png'
 img_bg = 'graphic/background.png'
 
 bat_width = 100

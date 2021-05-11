@@ -1,5 +1,7 @@
 import pygame
 
+dir = 'graphic'
+
 class Point():
     def __init__(self):
         self.xy = [0, 0]
@@ -26,11 +28,12 @@ class Point():
 class Unit(Point):
     def __init__(self, image):
         super().__init__()
-        self.image = pygame.image.load(image)
+        self.setImage(image)
         self.wh = [0, 0]
     
     def setImage(self, image):
-        self.image = image
+        img = dir + '/' + image
+        self.image = pygame.image.load(img)
         
     def getImage(self):
         return self.image  
