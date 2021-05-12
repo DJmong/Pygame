@@ -179,7 +179,7 @@ def runGame():
 
                 if bxy[0] >= width:
                     try:
-                        bulletxy.remove(bxy)
+                        bullet_xy.remove(bxy)
                     except:
                         pass
         
