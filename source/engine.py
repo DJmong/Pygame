@@ -16,8 +16,8 @@ def del_unit(unit):
     if unit in list_unit:
         list_unit.remove(unit)
 
-def chk_crash():
-    pass
+def chk_crash(unit_a, unit_b):
+    return pygame.sprite.collide_rect(unit_a, unit_b)
 
 if __name__ == '__main__':
     pass

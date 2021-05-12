@@ -168,10 +168,14 @@ def runGame():
             for i, bxy in enumerate(bullet_xy):
                 bxy[0] += 15
                 bullet_xy[i][0] = bxy[0]
+                
+                isShotBat = eg.chk_crash(bullet_xy[i], bat)
+                '''
                 if bxy[0] >= width:
                     if bxy[1] > bat_y and bxy[1] < bat_y + bat_height:
                         bullet_xy.remove(bxy)
                         isShotBat = True
+                        '''
 
                 if bxy[0] >= width:
                     try:
