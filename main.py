@@ -168,8 +168,7 @@ def runGame():
             for i, bxy in enumerate(bullet_xy):
                 bxy[0] += 15
                 bullet_xy[i][0] = bxy[0]
-                
-                isShotBat = eg.chk_crash(bullet_xy[i], bat)
+                isShotBat = eg.chk_Collision()
                 '''
                 if bxy[0] >= width:
                     if bxy[1] > bat_y and bxy[1] < bat_y + bat_height:
@@ -182,7 +181,7 @@ def runGame():
                         bullet_xy.remove(bxy)
                     except:
                         pass
-        
+                    
         #crash check for 
         if x + aircraft_width > bat_x:
             if (y > bat_y and y < bat_y + bat_height) or\
