@@ -1,12 +1,12 @@
 import pygame
 
-dir = 'graphic'
 
 class Point():
     def __init__(self):
         self.xy = [0, 0]
         self.ac = [0, 0]
-    
+        self.max_ac = [0, 0]
+        
     def setLocation(self, x, y):
         self.xy = [x, y]
         
@@ -19,11 +19,15 @@ class Point():
     def getAccel(self):
         return self.ac
 
+    def setMaxAccel(self, x, y):
+        self.max_ac = [x, y]
+
+    def getMaxAccel(self):
+        return self.max_ac
+
     def move(self):
-        x = 0
-        y = 1
-        self.xy[x] += self.ac[x]
-        self.xy[y] += self.ac[y]
+        self.xy[0] += self.ac[0]
+        self.xy[1] += self.ac[1]        
         
     def getRect(self):      
         return pygame.Rect(self.xy[0], self.xy[1]. self.wh[0], self.wh[1])
@@ -35,8 +39,7 @@ class Unit(Point):
         self.wh = [0, 0]
     
     def setImage(self, image):
-        img = dir + '/' + image
-        self.image = pygame.image.load(img)
+        self.image = pygame.image.load(image)
         
     def getImage(self):
         return self.image  
@@ -51,7 +54,18 @@ class Unit(Point):
 class Player(Unit):
     def key_ins(self, key):
         pass
-
+    
+    def Attack(self):
+        atk = Bullet('graphic/bullet.png', self)
+        atk.setSize(20,5)
+        atk.setMaxAccel(250, 0)
+        
+        Bullet_x = self.xy[0] + self.wh[0]
+        Bullet_y = self.xy[1] + self.wh[1] / 2
+        atk.setLocation(Bullet_x, Bullet_y)
+        
+        atk.setAccel(15, 0)
+        return atk
 class Enemy(Unit):
     def __init__(self, hp, image):
         super().__init__(image)

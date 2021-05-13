@@ -11,8 +11,8 @@ width = 1280
 height = 480
 background_width = width
 
-img_user = 'backup.png'
-img_enemy = 'bat.png'
+img_user = 'graphic/backup.png'
+img_enemy = 'graphic/bat.png'
 img_bg = 'graphic/background.png'
 
 bat_width = 100
@@ -56,7 +56,7 @@ def runGame():
     eg.add_unit(bat)
     eg.add_unit(user)
 
-    bullet_xy = []
+    bullet_list = []
     
     isShotBat = False
     boom_count = 0
@@ -107,10 +107,9 @@ def runGame():
                 user.setAccel(accel_x, accel_y)
                 
                 if event.key == pygame.K_LCTRL:
-                    x, y = user.getLocation()
-                    bullet_x = x + aircraft_width
-                    bullet_y = y + aircraft_height/2
-                    bullet_xy.append([bullet_x, bullet_y])
+                    bullet = user.Attack()
+                    eg.add_unit(bullet)
+                    bullet_list.append(bullet)
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
@@ -164,24 +163,16 @@ def runGame():
 
         bat_x, bat_y = bat.getLocation()
         #bullet check for bat
-        if len(bullet_xy) != 0:
-            for i, bxy in enumerate(bullet_xy):
-                bxy[0] += 15
-                bullet_xy[i][0] = bxy[0]
-                isShotBat = eg.chk_Collision()
+        if len(bullet_list) != 0:
+            for i, bxy in enumerate(bullet_list):
+                isShotBat = False
                 '''
                 if bxy[0] >= width:
                     if bxy[1] > bat_y and bxy[1] < bat_y + bat_height:
-                        bullet_xy.remove(bxy)
+                        bullet_list.remove(bxy)
                         isShotBat = True
                         '''
 
-                if bxy[0] >= width:
-                    try:
-                        bullet_xy.remove(bxy)
-                    except:
-                        pass
-                    
         #crash check for 
         if x + aircraft_width > bat_x:
             if (y > bat_y and y < bat_y + bat_height) or\
@@ -213,9 +204,10 @@ def runGame():
             isShotBat = False
             # bgm.playSfx('stop.mp3')
                             
-        if len(bullet_xy) != 0:
-            for bx, by in bullet_xy:
-                drawObject(bullet, bx, by)
+        if len(bullet_list) != 0:
+            for bullet in bullet_list:
+                bx, by = bullet.getLocation()
+                drawObject(bullet.getImage(), bx, by)
         
         if fire[1] != None:
             drawObject(fire[1], fire_x, fire_y)
@@ -250,8 +242,8 @@ def initGame():
     fires.append((0, pygame.image.load('graphic/fireball.png')))
     fires.append((0, pygame.image.load('graphic/fireball2.png')))  
     boom = pygame.image.load('graphic/boom.png')
-    bullet = pygame.image.load('graphic/bullet.png')
-
+ 
+    
     for i in range(3):
         fires.append((i+2, None))
          
