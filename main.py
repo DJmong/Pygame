@@ -208,10 +208,15 @@ def runGame():
         if not batDeath:
             drawObject(bat.getImage(), bat_x, bat_y)
         else:
+            if boom_count == 0:
+                bgm.playSfx('sfx.mp3')    
+            boom_count += 1
             drawObject(boom, bat_x, bat_y)
-            bgm.playSfx('sfx.mp3')
-            bat.setLocation(width, random.randrange(0, height - bat_height))
-            batDeath = False
+            
+            if boom_count > 6:
+                bat.setLocation(width, random.randrange(0, height - bat_height))
+                batDeath = False
+                boom_count = 0
             # bgm.playSfx('stop.mp3')
                             
         if len(bullet_list) != 0:

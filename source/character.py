@@ -90,6 +90,9 @@ class Bullet(Unit):
         
     def setOwn(self, owner):
         self.owner = owner
+    
+    def getOwn(self):
+        return self.owner
         
     def isOwner(self, obj):
         if self.owner == obj:
