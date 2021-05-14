@@ -17,9 +17,18 @@ def del_unit(unit):
         list_unit.remove(unit)
 
 def chk_Collision(unit_a, unit_b):
-    Rect_a = unit_a.getRect()
-    Rect_b = unit_b.getRect()
-    return Rect_a.colliderect(Rect_b)
+    x_a, y_a = unit_a.getLocation()
+    w_a, h_a = unit_a.getSize()
+    
+    x_b, y_b = unit_b.getLocation()
+    w_b, h_b = unit_b.getSize()
+    
+    if x_a + w_a > x_b:
+        if (y_a > y_b and y_a < y_b + h_b) or\
+        (y_a + h_a > y_b and y_a + h_a < y_b + h_b):
+            return True
+    return False
+    
     
 
 if __name__ == '__main__':

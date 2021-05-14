@@ -58,7 +58,7 @@ def runGame():
 
     bullet_list = []
     
-    isShotBat = False
+    batDeath = False
     boom_count = 0
 
     user.setLocation(width * 0.05, height * 0.8)
@@ -164,8 +164,18 @@ def runGame():
         bat_x, bat_y = bat.getLocation()
         #bullet check for bat
         if len(bullet_list) != 0:
-            for i, bxy in enumerate(bullet_list):
-                isShotBat = False
+            for bullet in bullet_list:
+                isShotBat = eg.chk_Collision(bullet, bat)
+                if isShotBat == True:
+                    bullet_list.remove(bullet)
+                    batDeath = True
+                    continue
+                b_x, b_y = bullet.getLocation()
+                
+                if b_y > height or b_y < 0 or b_x > width or b_x < 0:
+                    bullet_list.remove(bullet)
+                
+                    
                 '''
                 if bxy[0] >= width:
                     if bxy[1] > bat_y and bxy[1] < bat_y + bat_height:
@@ -195,13 +205,13 @@ def runGame():
         
         bat_x, bat_y = bat.getLocation()
 
-        if not isShotBat:
+        if not batDeath:
             drawObject(bat.getImage(), bat_x, bat_y)
         else:
             drawObject(boom, bat_x, bat_y)
             bgm.playSfx('sfx.mp3')
             bat.setLocation(width, random.randrange(0, height - bat_height))
-            isShotBat = False
+            batDeath = False
             # bgm.playSfx('stop.mp3')
                             
         if len(bullet_list) != 0:
