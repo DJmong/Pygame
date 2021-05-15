@@ -28,9 +28,7 @@ class Point():
     def move(self):
         self.xy[0] += self.ac[0]
         self.xy[1] += self.ac[1]        
-        
-    def getRect(self):      
-        return pygame.Rect(self.xy[0], self.xy[1]. self.wh[0], self.wh[1])
+
 
 class Unit(Point):
     def __init__(self, image):

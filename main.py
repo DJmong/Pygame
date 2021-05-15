@@ -75,9 +75,8 @@ def runGame():
     fire = fires[0]
     
     bgm.setBgmVolume(0.4)
-    bgm.playBgm('music.mp3')
+    bgm.playBgm('sound/music.mp3')
     
-    #bgm.playSfx('stop.mp3')
     crashed = False
     while not crashed:
         for event in pygame.event.get():
@@ -174,14 +173,7 @@ def runGame():
                 
                 if b_y > height or b_y < 0 or b_x > width or b_x < 0:
                     bullet_list.remove(bullet)
-                
-                    
-                '''
-                if bxy[0] >= width:
-                    if bxy[1] > bat_y and bxy[1] < bat_y + bat_height:
-                        bullet_list.remove(bxy)
-                        isShotBat = True
-                        '''
+
 
         #crash check for 
         if x + aircraft_width > bat_x:
@@ -209,7 +201,7 @@ def runGame():
             drawObject(bat.getImage(), bat_x, bat_y)
         else:
             if boom_count == 0:
-                bgm.playSfx('sfx.mp3')    
+                bgm.playSfx('sound/sfx.mp3')    
             boom_count += 1
             drawObject(boom, bat_x, bat_y)
             
@@ -217,7 +209,6 @@ def runGame():
                 bat.setLocation(width, random.randrange(0, height - bat_height))
                 batDeath = False
                 boom_count = 0
-            # bgm.playSfx('stop.mp3')
                             
         if len(bullet_list) != 0:
             for bullet in bullet_list:
