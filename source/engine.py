@@ -2,9 +2,6 @@ import pygame
 
 list_unit = list()
 
-def drawObject(obj, x, y):
-    global gamepad
-    gamepad.blit(obj, (x, y))
 
 def move_unit():
     global list_unit
