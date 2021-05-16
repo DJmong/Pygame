@@ -16,7 +16,13 @@ def chk_user_collision(user):
     return False
 
 def add_enemy(enemy):
+    global list_enemy
     list_enemy.append(enemy)
+
+def del_enemy(enemy):
+    global list_enemy
+    if enemy in list_unit:
+        list_enemy.remove(enemy)
 
 def add_unit(unit):
     global list_unit
@@ -33,8 +39,6 @@ def chk_collision(unit_a, unit_b):
     
     x_b, y_b = unit_b.getLocation()
     w_b, h_b = unit_b.getSize()
-    
-    
     
     if x_a + w_a > x_b and x_a < x_b + w_b:
         if y_a + h_a > y_b and y_a < y_b + h_b:

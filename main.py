@@ -184,7 +184,7 @@ def runGame():
                     bullet_list.remove(bullet)
 
 
-        #crash check for 
+        #crash check
         if eg.chk_user_collision(user):
             crash()
         
