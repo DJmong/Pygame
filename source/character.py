@@ -72,14 +72,8 @@ class Enemy(Unit):
     def getHp(self):
         return self.hp
     
-    def __add__(self, hp):
+    def add_hp(self, hp):
         self.hp += hp
-    
-    def __sub__(self, hp):
-        self.hp -= hp
-        
-    
-        
 
 class Bullet(Unit):
     def __init__(self, image, owner):

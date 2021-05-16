@@ -36,10 +36,8 @@ def chk_collision(unit_a, unit_b):
     
     
     
-    if (x_a > x_b and x_a < x_b + w_b) or\
-    (x_a + w_a > y_b and x_a + w_a < x_b + w_b):
-        if (y_a > y_b and y_a < y_b + h_b) or\
-        (y_a + h_a > y_b and y_a + h_a < y_b + h_b):
+    if x_a + w_a > x_b and x_a < x_b + w_b:
+        if y_a + h_a > y_b and y_a < y_b + h_b:
             return True
     return False
     

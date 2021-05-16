@@ -164,7 +164,7 @@ def runGame():
             random.shuffle(fires)
             fire = fires[0]
 
-        bat.setAccel(-7, 0)
+        bat.setAccel(-1, 0)
         bat_x, bat_y = bat.getLocation()
         if bat_x <= 0:
             bat.setLocation(width, random.randrange(0, height - bat_height))
