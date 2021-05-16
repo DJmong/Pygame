@@ -60,7 +60,8 @@ def runGame():
     
     batDeath = False
     boom_count = 0
-
+    eg.add_enemy(bat)
+    
     user.setLocation(width * 0.05, height * 0.8)
 
     background1_x = 0
@@ -172,7 +173,7 @@ def runGame():
         #bullet check for bat
         if len(bullet_list) != 0:
             for bullet in bullet_list:
-                isShotBat = eg.chk_Collision(bullet, bat)
+                isShotBat = eg.chk_collision(bullet, bat)
                 if isShotBat == True:
                     bullet_list.remove(bullet)
                     batDeath = True
@@ -184,10 +185,8 @@ def runGame():
 
 
         #crash check for 
-        if x + aircraft_width > bat_x:
-            if (y > bat_y and y < bat_y + bat_height) or\
-            (y + aircraft_height > bat_y and y + aircraft_height < bat_y + bat_height):
-                crash()
+        if eg.chk_user_collision(user):
+            crash()
         
         #fire crash check
         if fire[1] != None:
