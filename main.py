@@ -118,7 +118,7 @@ def runGame():
                     accel_x, accel_y = user.getAccel()
                     user.setAccel(0, accel_y)
                     
-        x, y = user.getLocation()        
+     
 
         gamepad.fill(Color)
         
@@ -134,11 +134,19 @@ def runGame():
         drawObject(background1, background1_x, 0)
         drawObject(background2, background2_x, 0)
 
-
+        x, y = user.getLocation()
+        w, h = user.getSize()
         if y < 0:
             y = 0
-        elif y > height - aircraft_height:
-            y = height - aircraft_height
+        elif y > (height - h):
+            y = (height - h)
+
+        if x < 0:
+            x = 0
+        elif x > (width - w):
+            x = (width - w)
+        
+        user.setLocation(x, y)
         
         drawObject(user.getImage(), x, y)
         

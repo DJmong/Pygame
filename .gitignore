@@ -1,2 +1,4 @@
 test.py
 bc_*
+__py*
+.vscode
