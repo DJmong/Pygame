@@ -1,6 +1,9 @@
 import pygame
-
-
+import os
+import random
+from source import resolution as res
+from source import engine as eg
+dir = os.pardir + '/graphic'
 class Point():
     def __init__(self):
         self.xy = [0, 0]
@@ -35,6 +38,10 @@ class Unit(Point):
         super().__init__()
         self.setImage(image)
         self.wh = [0, 0]
+        eg.add_unit(self)
+    
+    def __del__(self):
+        eg.del_unit(self)
     
     def setImage(self, image):
         self.image = pygame.image.load(image)
@@ -50,6 +57,9 @@ class Unit(Point):
         return self.wh
 
 class Player(Unit):
+    def __init__(self, image):
+        super().__init__(image)
+        
     def key_ins(self, key):
         pass
     
@@ -68,13 +78,23 @@ class Enemy(Unit):
     def __init__(self, hp, image):
         super().__init__(image)
         self.hp = hp
+        eg.add_enemy(self)
+        
+    def __del__(self):
+        eg.del_enemy(self)
         
     def getHp(self):
         return self.hp
     
-    def add_hp(self, hp):
-        self.hp += hp
-
+    def take_dmg(self, hp):
+        self.hp -= hp
+        
+    def is_dead(self):
+        if self.hp <= 0:
+            return True
+        else:
+            return False
+        
 class Bullet(Unit):
     def __init__(self, image, owner):
         super().__init__(image)
@@ -92,9 +112,7 @@ class Bullet(Unit):
         else:
             return False
 
+
+
 if __name__ == "__main__":
-    a = Enemy(10, pygame.image.load('graphic/fireball.png'))
-    a.setLocation(1,2)
-    a.setAccel(2, 1)
-    a.move()
-    print(a.getLocation())
+    print(dir)

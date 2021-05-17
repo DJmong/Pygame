@@ -3,20 +3,20 @@ import random
 from source import bgm
 from source import character as ch
 from source import engine as eg
+from source import resolution as res
+from source import enemy
 from time import sleep
 
 Color = (255, 255, 255)
 RED = (255, 0, 0)
-width = 1280
-height = 480
-background_width = width
+
+res.width = 1280
+res.height = 480
+
+background_width = res.width
 
 img_user = 'graphic/backup.png'
-img_enemy = 'graphic/bat.png'
 img_bg = 'graphic/background.png'
-
-bat_width = 100
-bat_height = 60
 
 fireball1_width = 140
 fireball1_height = 60
@@ -35,7 +35,7 @@ def dispMessage(text):
     
     largeText = pygame.font.Font('freesansbold.ttf', 115)
     TextSurf, TextRect = textObj(text, largeText)
-    TextRect.center = ((width / 2), (height / 2))
+    TextRect.center = ((res.width / 2), (res.height / 2))
     gamepad.blit(TextSurf, TextRect)
     pygame.display.update()
     sleep(2)
@@ -53,25 +53,23 @@ def runGame():
     global gamepad, user, clock, background1, background2
     global bat, fires, boom
 
-    eg.add_unit(bat)
-    eg.add_unit(user)
+
 
     bullet_list = []
     
     batDeath = False
     boom_count = 0
-    eg.add_enemy(bat)
     
-    user.setLocation(width * 0.05, height * 0.8)
+    user.setLocation(res.width * 0.05, res.height * 0.8)
 
     background1_x = 0
     background2_x = background_width
     speed = 2
     
-    bat.setLocation(width, random.randrange(0, height))
+
     
-    fire_x = width
-    fire_y = random.randrange(0, height)
+    fire_x = res.width
+    fire_y = random.randrange(0, res.height)
     random.shuffle(fires)
     fire = fires[0]
     
@@ -108,7 +106,6 @@ def runGame():
                 
                 if event.key == pygame.K_LCTRL:
                     bullet = user.Attack()
-                    eg.add_unit(bullet)
                     bullet_list.append(bullet)
 
             if event.type == pygame.KEYUP:
@@ -139,13 +136,13 @@ def runGame():
         w, h = user.getSize()
         if y < 0:
             y = 0
-        elif y > (height - h):
-            y = (height - h)
+        elif y > (res.height - h):
+            y = (res.height - h)
 
         if x < 0:
             x = 0
-        elif x > (width - w):
-            x = (width - w)
+        elif x > (res.width - w):
+            x = (res.width - w)
         
         user.setLocation(x, y)
         
@@ -159,15 +156,16 @@ def runGame():
             fire_x -= 15
             
         if fire_x <= 0:
-            fire_x = width
-            fire_y = random.randrange(0, height)
+            fire_x = res.width
+            fire_y = random.randrange(0, res.height)
             random.shuffle(fires)
             fire = fires[0]
 
-        bat.setAccel(-1, 0)
+
         bat_x, bat_y = bat.getLocation()
+        bat_w, bat_h = bat.getSize()
         if bat_x <= 0:
-            bat.setLocation(width, random.randrange(0, height - bat_height))
+            bat.setLocation(res.width, random.randrange(0, res.height - bat_h))
 
         bat_x, bat_y = bat.getLocation()
         #bullet check for bat
@@ -175,12 +173,15 @@ def runGame():
             for bullet in bullet_list:
                 isShotBat = eg.chk_collision(bullet, bat)
                 if isShotBat == True:
+                    bat.take_dmg(1)
                     bullet_list.remove(bullet)
+                    
+                if bat.is_dead():
                     batDeath = True
                     continue
                 b_x, b_y = bullet.getLocation()
                 
-                if b_y > height or b_y < 0 or b_x > width or b_x < 0:
+                if b_y > res.height or b_y < 0 or b_x > res.width or b_x < 0:
                     bullet_list.remove(bullet)
 
 
@@ -203,7 +204,7 @@ def runGame():
                     crash()
         
         bat_x, bat_y = bat.getLocation()
-
+        bat_w, bat_h = bat.getSize();
         if not batDeath:
             drawObject(bat.getImage(), bat_x, bat_y)
         else:
@@ -213,7 +214,9 @@ def runGame():
             drawObject(boom, bat_x, bat_y)
             
             if boom_count > 6:
-                bat.setLocation(width, random.randrange(0, height - bat_height))
+                bat.setLocation(res.width, random.randrange(0, res.height - bat_h))
+                del(bat)
+                bat = enemy.Bat()
                 batDeath = False
                 boom_count = 0
                             
@@ -239,18 +242,17 @@ def initGame():
     
     fires = []
     pygame.init()
-    gamepad = pygame.display.set_mode((width, height))
+    gamepad = pygame.display.set_mode((res.width, res.height))
     
     user = ch.Player(img_user)
     user.setSize(aircraft_width, aircraft_height)
     
     pygame.display.set_caption("Test")
     background1 = pygame.image.load(img_bg)
-    background1 = pygame.transform.scale(background1, (width, height))
+    background1 = pygame.transform.scale(background1, (res.width, res.height))
     background2 = background1.copy()
  
-    bat = ch.Enemy(100, img_enemy)
-    bat.setSize(bat_width, bat_height)
+    bat = enemy.Bat()
     
     fires.append((0, pygame.image.load('graphic/fireball.png')))
     fires.append((0, pygame.image.load('graphic/fireball2.png')))  
