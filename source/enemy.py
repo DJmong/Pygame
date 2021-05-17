@@ -13,5 +13,5 @@ class Bat(ch.Enemy):
         self.setAccel(-6, 0)
         
     def __del__(self):
-        pass
+        super().__del__()
     

@@ -175,6 +175,7 @@ def runGame():
                 if isShotBat == True:
                     bat.take_dmg(1)
                     bullet_list.remove(bullet)
+                    continue
                     
                 if bat.is_dead():
                     batDeath = True
@@ -183,6 +184,7 @@ def runGame():
                 
                 if b_y > res.height or b_y < 0 or b_x > res.width or b_x < 0:
                     bullet_list.remove(bullet)
+                    continue
 
 
         #crash check
