@@ -2,6 +2,8 @@ import pygame
 
 list_unit = list()
 list_enemy = list()
+list_bullet = list()
+list_enemy_bullet = list()
 
 def move_unit():
     global list_unit
