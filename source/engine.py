@@ -5,6 +5,9 @@ list_enemy = list()
 list_bullet = list()
 list_enemy_bullet = list()
 
+def bullet_collision(bullet, unit):
+    pass
+
 def move_unit():
     global list_unit
     for unit in list_unit:

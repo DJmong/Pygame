@@ -3,7 +3,7 @@ import os
 import random
 from source import resolution as res
 from source import engine as eg
-dir = os.pardir + '/graphic'
+
 class Point():
     def __init__(self):
         self.xy = [0, 0]
@@ -31,7 +31,6 @@ class Point():
     def move(self):
         self.xy[0] += self.ac[0]
         self.xy[1] += self.ac[1]        
-
 
 class Unit(Point):
     def __init__(self, image):
@@ -74,6 +73,7 @@ class Player(Unit):
         
         atk.setAccel(15, 0)
         return atk
+    
 class Enemy(Unit):
     def __init__(self, hp, image):
         super().__init__(image)
@@ -112,7 +112,5 @@ class Bullet(Unit):
         else:
             return False
 
-
-
 if __name__ == "__main__":
-    print(dir)
+    pass
