@@ -175,10 +175,8 @@ def runGame():
                 if isShotBat == True:
                     bat.take_dmg(bullet.getDamage())
                     bullet_list.remove(bullet)
-                    continue
-                    
-                if bat.is_dead():
-                    batDeath = True
+                    if bat.is_dead():
+                        batDeath = True
                     continue
                 b_x, b_y = bullet.getLocation()
                 
@@ -209,6 +207,7 @@ def runGame():
         bat_w, bat_h = bat.getSize();
         if not batDeath:
             drawObject(bat.getImage(), bat_x, bat_y)
+            
         else:
             if boom_count == 0:
                 bgm.playSfx('sound/sfx.mp3')    
