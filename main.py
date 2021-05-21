@@ -173,7 +173,7 @@ def runGame():
             for bullet in bullet_list:
                 isShotBat = eg.chk_collision(bullet, bat)
                 if isShotBat == True:
-                    bat.take_dmg(1)
+                    bat.take_dmg(bullet.getDamage())
                     bullet_list.remove(bullet)
                     continue
                     

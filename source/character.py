@@ -63,7 +63,7 @@ class Player(Unit):
         pass
     
     def Attack(self):
-        atk = Bullet('graphic/bullet.png', self)
+        atk = Bullet('graphic/bullet.png', self, 3)
         atk.setSize(20,5)
         atk.setMaxAccel(250, 0)
         
@@ -96,9 +96,16 @@ class Enemy(Unit):
             return False
         
 class Bullet(Unit):
-    def __init__(self, image, owner):
+    def __init__(self, image, owner, dmg):
         super().__init__(image)
         self.setOwn(owner)
+        self.setDamage(dmg)
+        
+    def setDamage(self, dmg):
+        self.damage = dmg
+        
+    def getDamage(self):
+        return self.damage
         
     def setOwn(self, owner):
         self.owner = owner
