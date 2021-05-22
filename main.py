@@ -193,8 +193,7 @@ def runGame():
                 if (y > fire_y and y < fire_y + fireball_height) or\
                 (y + aircraft_height > fire_y and y + aircraft_height < fire_y + fireball_height):
                     crash()
-
-        
+      
         bat_x, bat_y = bat.getLocation()
         bat_w, bat_h = bat.getSize();
         if not batDeath:
