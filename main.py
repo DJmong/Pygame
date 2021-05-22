@@ -52,11 +52,8 @@ def drawObject(obj, x, y):
 def runGame():
     global gamepad, user, clock, background1, background2
     global bat, fires, boom
-
-
-
-    bullet_list = []
     
+    bullet_list = []
     batDeath = False
     boom_count = 0
     
@@ -65,8 +62,6 @@ def runGame():
     background1_x = 0
     background2_x = background_width
     speed = 2
-    
-
     
     fire_x = res.width
     fire_y = random.randrange(0, res.height)
@@ -115,8 +110,6 @@ def runGame():
                 if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                     accel_x, accel_y = user.getAccel()
                     user.setAccel(0, accel_y)
-                    
-     
 
         gamepad.fill(Color)
         
@@ -161,7 +154,6 @@ def runGame():
             random.shuffle(fires)
             fire = fires[0]
 
-
         bat_x, bat_y = bat.getLocation()
         bat_w, bat_h = bat.getSize()
         if bat_x <= 0:
@@ -184,7 +176,6 @@ def runGame():
                     bullet_list.remove(bullet)
                     continue
 
-
         #crash check
         if eg.chk_user_collision(user):
             crash()
@@ -202,6 +193,8 @@ def runGame():
                 if (y > fire_y and y < fire_y + fireball_height) or\
                 (y + aircraft_height > fire_y and y + aircraft_height < fire_y + fireball_height):
                     crash()
+
+            return True
         
         bat_x, bat_y = bat.getLocation()
         bat_w, bat_h = bat.getSize();
