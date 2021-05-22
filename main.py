@@ -1,5 +1,6 @@
 import pygame
 import random
+import copy
 from source import bgm
 from source import character as ch
 from source import engine as eg
@@ -12,8 +13,6 @@ RED = (255, 0, 0)
 
 res.width = 1280
 res.height = 480
-
-background_width = res.width
 
 img_user = 'graphic/backup.png'
 img_bg = 'graphic/background.png'
@@ -59,8 +58,7 @@ def runGame():
     
     user.setLocation(res.width * 0.05, res.height * 0.8)
 
-    background1_x = 0
-    background2_x = background_width
+
     speed = 2
     
     fire_x = res.width
@@ -113,17 +111,19 @@ def runGame():
 
         gamepad.fill(Color)
         
-        background1_x -= speed
-        background2_x -= speed
+        background1_x, background1_y = background1.getLocation()
+        background_width, background_height = background1.getSize()
+        background2_x, background2_y = background2.getLocation()
+        background2_width, background2_height = background1.getSize()
 
         if background1_x <= -background_width:
             background1_x = background_width
         
-        if background2_x <= -background_width:
-            background2_x = background_width
+        if background2_x <= -background2_width:
+            background2_x = background2_width
         
-        drawObject(background1, background1_x, 0)
-        drawObject(background2, background2_x, 0)
+        drawObject(background1.getImage(), background1_x, background1_y)
+        drawObject(background2.getImage(), background2_x, background2_y)
 
         x, y = user.getLocation()
         w, h = user.getSize()
@@ -240,9 +240,18 @@ def initGame():
     user.setSize(aircraft_width, aircraft_height)
     
     pygame.display.set_caption("Test")
-    background1 = pygame.image.load(img_bg)
-    background1 = pygame.transform.scale(background1, (res.width, res.height))
-    background2 = background1.copy()
+    
+
+    background1 = ch.Unit(img_bg)
+    background1.setLocation(0,0)
+    background1.setSize(res.width, res.height)
+    background1.setAccel(-2, 0)
+    
+    background2 = ch.Unit(img_bg)
+    background2.setLocation(res.width,0)
+    background2.setSize(res.width, res.height)
+    background2.setAccel(-2, 0)
+
  
     bat = enemy.Bat()
     
