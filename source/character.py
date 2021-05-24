@@ -74,6 +74,22 @@ class Player(Unit):
         atk.setAccel(15, 0)
         return atk
     
+    def move(self):
+        self.xy[0] += self.ac[0]
+        self.xy[1] += self.ac[1]
+        
+        if self.xy[0] + self.wh[0] >= res.width:
+            self.xy[0] = res.width - self.wh[0]
+            
+        elif self.xy[0] <= 0:
+            self.xy[0] = 0
+            
+        if self.xy[1] + self.wh[1] >= res.height:
+            self.xy[1] = res.height - self.wh[1]
+        
+        elif self.xy[1] <= 0:
+            self.xy[1] = 0 
+    
 class Enemy(Unit):
     def __init__(self, hp, image):
         super().__init__(image)
