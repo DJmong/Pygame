@@ -125,6 +125,9 @@ def runGame():
         drawObject(background1.getImage(), background1_x, background1_y)
         drawObject(background2.getImage(), background2_x, background2_y)
 
+        background1.setLocation(background1_x, background1_y)
+        background2.setLocation(background2_x, background2_y)
+        
         x, y = user.getLocation()
         w, h = user.getSize()
         if y < 0:
