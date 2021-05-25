@@ -63,8 +63,7 @@ def runGame():
     
     fire_x = res.width
     fire_y = random.randrange(0, res.height)
-    random.shuffle(fires)
-    fire = fires[0]
+
     
     bgm.setBgmVolume(0.4)
     bgm.playBgm('sound/music.mp3')
@@ -129,33 +128,9 @@ def runGame():
         background2.setLocation(background2_x, background2_y)
         
         x, y = user.getLocation()
-        w, h = user.getSize()
-        if y < 0:
-            y = 0
-        elif y > (res.height - h):
-            y = (res.height - h)
-
-        if x < 0:
-            x = 0
-        elif x > (res.width - w):
-            x = (res.width - w)
-        
-        user.setLocation(x, y)
         
         drawObject(user.getImage(), x, y)
-        
 
-        if fire == None:
-            fire_x -= 30
-
-        else:
-            fire_x -= 15
-            
-        if fire_x <= 0:
-            fire_x = res.width
-            fire_y = random.randrange(0, res.height)
-            random.shuffle(fires)
-            fire = fires[0]
 
         bat_x, bat_y = bat.getLocation()
         bat_w, bat_h = bat.getSize()
@@ -183,19 +158,7 @@ def runGame():
         if eg.chk_user_collision(user):
             crash()
         
-        #fire crash check
-        if fire[1] != None:
-            if fire[0] == 0:
-                fireball_width = fireball1_width
-                fireball_height = fireball1_height
-            elif fire[0] == 1:
-                fireball_width = fireball2_width
-                fireball_height = fireball2_height
-            
-            if x + aircraft_width > fire_x:
-                if (y > fire_y and y < fire_y + fireball_height) or\
-                (y + aircraft_height > fire_y and y + aircraft_height < fire_y + fireball_height):
-                    crash()
+
       
         bat_x, bat_y = bat.getLocation()
         bat_w, bat_h = bat.getSize();
@@ -220,8 +183,6 @@ def runGame():
                 bx, by = bullet.getLocation()
                 drawObject(bullet.getImage(), bx, by)
         
-        if fire[1] != None:
-            drawObject(fire[1], fire_x, fire_y)
 
         eg.move_unit()
         

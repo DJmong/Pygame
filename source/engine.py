@@ -5,8 +5,11 @@ list_enemy = list()
 list_bullet = list()
 list_enemy_bullet = list()
 
-def bullet_collision(bullet, unit):
-    pass
+def bullet_collision(bullet_list, unit_list):
+    for bullet in bullet_list:
+        for unit in unit_list:
+            chk_collision(bullet, unit)
+            
 
 def move_unit():
     global list_unit
@@ -16,6 +19,10 @@ def move_unit():
 def chk_user_collision(user):
     for enemy in list_enemy:
         if chk_collision(user, enemy):
+            return True
+    
+    for bullet in list_enemy_bullet:
+        if chk_collision(user, bullet):
             return True
         
     return False
