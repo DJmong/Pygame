@@ -155,7 +155,6 @@ def runGame():
             eg.drawObject(boom, (bat_x, bat_y))
             
             if boom_count > 6:
-                bat.setLocation(res.width, random.randrange(0, res.height - bat_h))
                 del(bat)
                 bat = enemy.Bat()
                 batDeath = False
