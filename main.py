@@ -17,10 +17,6 @@ res.height = 480
 img_user = 'graphic/backup.png'
 img_bg = 'graphic/background.png'
 
-fireball1_width = 140
-fireball1_height = 60
-fireball2_width = 86
-fireball2_height = 60
 
 aircraft_width = 80
 aircraft_height = 40
@@ -30,40 +26,29 @@ def textObj(text, font):
     return textSurface, textSurface.get_rect()
 
 def dispMessage(text):
-    global gamepad
-    
+
     largeText = pygame.font.Font('freesansbold.ttf', 115)
     TextSurf, TextRect = textObj(text, largeText)
     TextRect.center = ((res.width / 2), (res.height / 2))
-    gamepad.blit(TextSurf, TextRect)
+    eg.gamepad.blit(TextSurf, TextRect)
     pygame.display.update()
     sleep(2)
     runGame()
     
 def crash():
-    global gamepad
     dispMessage('Crashed!')
     
-def drawObject(obj, x, y):
-    global gamepad
-    gamepad.blit(obj, (x, y))
+
     
 def runGame():
-    global gamepad, user, clock, background1, background2
-    global bat, fires, boom
+    global user, clock, background1, background2
+    global bat, boom
     
     bullet_list = []
     batDeath = False
     boom_count = 0
     
     user.setLocation(res.width * 0.05, res.height * 0.8)
-
-
-    speed = 2
-    
-    fire_x = res.width
-    fire_y = random.randrange(0, res.height)
-
     
     bgm.setBgmVolume(0.4)
     bgm.playBgm('sound/music.mp3')
@@ -108,7 +93,7 @@ def runGame():
                     accel_x, accel_y = user.getAccel()
                     user.setAccel(0, accel_y)
 
-        gamepad.fill(Color)
+        eg.gamepad.fill(Color)
         
         background1_x, background1_y = background1.getLocation()
         background_width, background_height = background1.getSize()
@@ -121,15 +106,13 @@ def runGame():
         if background2_x <= -background2_width:
             background2_x = background2_width
         
-        drawObject(background1.getImage(), background1_x, background1_y)
-        drawObject(background2.getImage(), background2_x, background2_y)
+        eg.drawObject(background1.getImage(), background1.getLocation())
+        eg.drawObject(background2.getImage(), background2.getLocation())
 
         background1.setLocation(background1_x, background1_y)
         background2.setLocation(background2_x, background2_y)
         
-        x, y = user.getLocation()
-        
-        drawObject(user.getImage(), x, y)
+        eg.drawObject(user.getImage(), user.getLocation())
 
 
         bat_x, bat_y = bat.getLocation()
@@ -163,13 +146,13 @@ def runGame():
         bat_x, bat_y = bat.getLocation()
         bat_w, bat_h = bat.getSize();
         if not batDeath:
-            drawObject(bat.getImage(), bat_x, bat_y)
+            eg.drawObject(bat.getImage(), bat.getLocation())
             
         else:
             if boom_count == 0:
                 bgm.playSfx('sound/sfx.mp3')    
             boom_count += 1
-            drawObject(boom, bat_x, bat_y)
+            eg.drawObject(boom, (bat_x, bat_y))
             
             if boom_count > 6:
                 bat.setLocation(res.width, random.randrange(0, res.height - bat_h))
@@ -180,8 +163,7 @@ def runGame():
                             
         if len(bullet_list) != 0:
             for bullet in bullet_list:
-                bx, by = bullet.getLocation()
-                drawObject(bullet.getImage(), bx, by)
+                eg.drawObject(bullet.getImage(), bullet.getLocation())
         
 
         eg.move_unit()
@@ -193,18 +175,14 @@ def runGame():
     quit()
 
 def initGame():
-    global gamepad, user, clock, background1, background2
-    global bat, fires, bullet, boom
+    global user, clock, background1, background2
+    global bat, bullet, boom
     
-    fires = []
-    pygame.init()
-    gamepad = pygame.display.set_mode((res.width, res.height))
-    
+    eg.start_game()
     user = ch.Player(img_user)
     user.setSize(aircraft_width, aircraft_height)
     
     pygame.display.set_caption("Test")
-    
 
     background1 = ch.Unit(img_bg)
     background1.setLocation(0,0)
@@ -219,14 +197,10 @@ def initGame():
  
     bat = enemy.Bat()
     
-    fires.append((0, pygame.image.load('graphic/fireball.png')))
-    fires.append((0, pygame.image.load('graphic/fireball2.png')))  
     boom = pygame.image.load('graphic/boom.png')
  
     
-    for i in range(3):
-        fires.append((i+2, None))
-         
+
     clock = pygame.time.Clock()
     runGame()
 

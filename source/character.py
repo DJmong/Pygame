@@ -59,9 +59,6 @@ class Player(Unit):
     def __init__(self, image):
         super().__init__(image)
         
-    def key_ins(self, key):
-        pass
-    
     def Attack(self):
         atk = Bullet('graphic/bullet.png', self, 3)
         atk.setSize(20,5)
@@ -97,6 +94,7 @@ class Enemy(Unit):
         eg.add_enemy(self)
         
     def __del__(self):
+        super().__del__()
         eg.del_enemy(self)
         
     def getHp(self):

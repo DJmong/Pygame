@@ -1,15 +1,23 @@
 import pygame
+from source import resolution as res
 
 list_unit = list()
 list_enemy = list()
 list_bullet = list()
 list_enemy_bullet = list()
 
+def start_game():
+    global gamepad
+    pygame.init()
+    gamepad = pygame.display.set_mode((res.width, res.height))
+
+def drawObject(obj, location):
+    gamepad.blit(obj, location)
+
 def bullet_collision(bullet_list, unit_list):
     for bullet in bullet_list:
         for unit in unit_list:
             chk_collision(bullet, unit)
-            
 
 def move_unit():
     global list_unit
