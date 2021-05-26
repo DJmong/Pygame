@@ -133,5 +133,14 @@ class Bullet(Unit):
         else:
             return False
 
+class Sfx(Unit):
+    def __init__(self, image, xy, wh, ac):
+        super().__init__(image)
+        self.setLocation(xy[0], xy[1])
+        self.setSize(wh[0], wh[1])
+        self.setAccel(ac[0], ac[1])
+    
+        
+    
 if __name__ == "__main__":
     pass

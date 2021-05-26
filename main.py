@@ -140,8 +140,6 @@ def runGame():
         #crash check
         if eg.chk_user_collision(user):
             crash()
-        
-
       
         bat_x, bat_y = bat.getLocation()
         bat_w, bat_h = bat.getSize();
@@ -163,7 +161,6 @@ def runGame():
         if len(bullet_list) != 0:
             for bullet in bullet_list:
                 eg.drawObject(bullet.getImage(), bullet.getLocation())
-        
 
         eg.move_unit()
         
