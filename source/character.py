@@ -139,7 +139,23 @@ class Sfx(Unit):
         self.setLocation(xy[0], xy[1])
         self.setSize(wh[0], wh[1])
         self.setAccel(ac[0], ac[1])
+        self.count = 0
+        self.setMaxCount(0)
+        
+    def __del__(self):
+        super().__del__()
+        
+    def setMaxCount(self, count):
+        self.maxCount = count
     
+    def move(self):
+        super().move()
+        self.count += 1
+
+    def chkSfxDone(self):
+        if self.maxCount <= self.count:
+            return True
+        return False
         
     
 if __name__ == "__main__":
