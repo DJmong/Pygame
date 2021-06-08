@@ -26,7 +26,6 @@ def textObj(text, font):
     return textSurface, textSurface.get_rect()
 
 def dispMessage(text):
-
     largeText = pygame.font.Font('freesansbold.ttf', 115)
     TextSurf, TextRect = textObj(text, largeText)
     TextRect.center = ((res.width / 2), (res.height / 2))
