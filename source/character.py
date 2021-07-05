@@ -71,6 +71,9 @@ class Player(Unit):
         atk.setAccel(15, 0)
         return atk
     
+    def setAccel(self, ac_x, ac_y):
+        super().setAccel(ac_x, ac_y)
+    
     def move(self):
         self.xy[0] += self.ac[0]
         self.xy[1] += self.ac[1]
