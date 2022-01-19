@@ -40,7 +40,7 @@ class Unit(Point):
         eg.add_unit(self)
     
     def __del__(self):
-        eg.del_unit(self)
+        pass
     
     def setImage(self, image):
         self.image = pygame.image.load(image)
@@ -98,7 +98,6 @@ class Enemy(Unit):
         
     def __del__(self):
         super().__del__()
-        eg.del_enemy(self)
         
     def getHp(self):
         return self.hp

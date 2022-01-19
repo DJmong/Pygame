@@ -152,6 +152,8 @@ def runGame():
             eg.drawObject(boom, (bat_x, bat_y))
             
             if boom_count > 6:
+                eg.del_enemy(bat)
+                eg.del_unit(bat)
                 del(bat)
                 bat = enemy.Bat()
                 batDeath = False
