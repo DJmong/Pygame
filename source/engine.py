@@ -1,6 +1,7 @@
 import pygame
 from source import resolution as res
 
+list_draw = list()
 list_unit = list()
 list_enemy = list()
 list_bullet = list()
@@ -64,8 +65,13 @@ def chk_collision(unit_a, unit_b):
         if y_a + h_a > y_b and y_a < y_b + h_b:
             return True
     return False
-    
-    
 
+def add_draw(object):
+    list_draw.append(object)
+
+def del_draw(object):
+    if object in list_draw:    
+        list_draw.remove(object)
+    
 if __name__ == '__main__':
     pass

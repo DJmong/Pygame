@@ -1,5 +1,8 @@
 import pygame
 
+def init():
+    pygame.mixer.init()
+
 def playBgm(file):
     pygame.mixer.music.load(file)
     pygame.mixer.music.play(-1)
@@ -11,6 +14,7 @@ def stopBgm():
     pygame.mixer.music.stop()
 
 def playSfx(file):
+    pygame.mixer.init()
     Sound = pygame.mixer.Sound(file)
     pygame.mixer.Sound.play(Sound)
 

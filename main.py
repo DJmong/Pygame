@@ -6,6 +6,7 @@ from source import character as ch
 from source import engine as eg
 from source import resolution as res
 from source import enemy
+from source import control as ct
 from time import sleep
 
 Color = (255, 255, 255)
@@ -152,12 +153,15 @@ def runGame():
             eg.drawObject(boom, (bat_x, bat_y))
             
             if boom_count > 6:
+                ct.remove_enemy(bat)
+                '''
                 eg.del_enemy(bat)
                 eg.del_unit(bat)
                 del(bat)
                 bat = enemy.Bat()
                 batDeath = False
                 boom_count = 0
+                '''
                             
         if len(bullet_list) != 0:
             for bullet in bullet_list:
@@ -175,6 +179,8 @@ def initGame():
     global user, clock, background1, background2
     global bat, bullet, boom
     
+    pygame.init()
+    pygame.mixer.init()
     eg.start_game()
     user = ch.Player(img_user)
     user.setSize(aircraft_width, aircraft_height)
